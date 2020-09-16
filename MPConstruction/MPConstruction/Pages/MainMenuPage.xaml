@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#FBFBFE"
+             x:Class="MPConstruction.Pages.MainMenuPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="40,40,40,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Grid.Column="0" Orientation="Horizontal">
+                    <ffimagesvg:SvgCachedImage Source="tools.svg" Aspect="Fill" />
+                    <Label Grid.Column="0" Text="Tools" TextColor="#1D120D" 
+                           FontSize="34" FontAttributes="Bold"/>
+                </StackLayout>
+
+                <Frame Grid.Column="1" BorderColor="Black" Padding="5,5,10,5" CornerRadius="10">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ExecuteNew}"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal">
+                        <ffimagesvg:SvgCachedImage  Source="add_box.svg" Aspect="Fill" />
+                        <Label Text="New" TextColor="#1D120D"
+                               FontSize="18" VerticalTextAlignment="Center" />
+                    </StackLayout>
+                </Frame>
+            </Grid>
+            
+            <ListView x:Name="equipments" Grid.Row="2" ItemsSource="{Binding Equipments}" SelectedItem="{Binding SelectedEquipment, Mode=TwoWay}" 
+                      SelectionMode="Single" SeparatorVisibility="None" HasUnevenRows="True" IsPullToRefreshEnabled="True" 
+                      IsRefreshing="{Binding IsBusy, Mode=TwoWay}" RefreshCommand="{Binding LoadEquipmentsCommand}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Grid.Column="1" Margin="40,5,0,5" Spacing="0" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"  TextColor="#1D120D" FontSize="28" FontAttributes="Bold" />
+                                    <Label Text="{Binding Id}"  TextColor="#1D120D" FontSize="20" />
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
